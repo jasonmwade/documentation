@@ -1,1 +1,1 @@
-# documentation
+Outline configurations and documentation
