@@ -34,6 +34,11 @@ This host is also running Proxmox and contains a VM running the master server in
 The volumes are as follows: 
 /bigdata/mfs # 8TB spinning disk
 
+Overall configuration
+The above configuration gives 21TB total space and around 15TB of usable space. Taking down one host does
+not result in any storage outage. An extended outage or failure causes the chunks to start replicating
+as fast as the network and disks can handle to maintain the goal of 2. Higher goals are possible also, but 
+depends on the number of separate systems available.
 
 General guidance
 * Have at least a goal of 2 (lizardfs set goal -r 2 /lizardfs/directory) to ensure data resiliency
@@ -44,3 +49,6 @@ networking and are NOT suitable for this application
 * mfsmount is used to mount the volume. To get the volume on a Windows system, create a linux VM that mounts
 the storage and then runs Samba to share it to Windows. The permissions are difficult if AD or LDAP are used,
 but simple Samba authentication is the same as any other file system.
+* The more disks the faster the file system. 
+* Minimum of 3 servers will ensure data resiliency with a goal of 2. One failure in a 3 server configuration 
+leaves enough systems to ensure the goal can be met.
