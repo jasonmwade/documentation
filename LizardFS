@@ -36,7 +36,11 @@ The volumes are as follows:
 
 
 General guidance
-* Have at least a goal of 2 (lizardfs set goal -r 2 /directory) to ensure data resiliency
+* Have at least a goal of 2 (lizardfs set goal -r 2 /lizardfs/directory) to ensure data resiliency
 * Reads and writes are notably slower than you would expect. The max throughput with a goal of 2 (2 copies of 
 each chunk) with the above setup is around 30MB/sec.
-* Use at least 1Gb networking on all interfaces and between switches.
+* Use at least 1Gb networking on all interfaces and between switches. Older Raspberry Pi devices have 100Mb 
+networking and are NOT suitable for this application
+* mfsmount is used to mount the volume. To get the volume on a Windows system, create a linux VM that mounts
+the storage and then runs Samba to share it to Windows. The permissions are difficult if AD or LDAP are used,
+but simple Samba authentication is the same as any other file system.
