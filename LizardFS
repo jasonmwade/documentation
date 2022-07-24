@@ -1,6 +1,7 @@
 LizardFS provides an open-source way to join multiple random disks into one logical, global, distributed 
 storage volume. The volume support data chunking and replication settings that are dynamically set while 
-running.
+running. LizardFS is an open-source fork of MooseFS. MooseFS is significantly faster than LizardFS, but 
+open-source.
 
 Chunkserver is the name of the instance that holds an actual disk. The chunkserver can be a VM, physical 
 system, and ARM or X86. The disk configuration is set by a simple config file on each chunkserver pointing 
