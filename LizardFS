@@ -39,6 +39,8 @@ The above configuration gives 21TB total space and around 15TB of usable space. 
 not result in any storage outage. An extended outage or failure causes the chunks to start replicating
 as fast as the network and disks can handle to maintain the goal of 2. Higher goals are possible also, but 
 depends on the number of separate systems available.
+For home use, this configuration is minimized to ensure cost-effective resilient storage. Scaling up is as
+simple as adding additional instances and disks. 
 
 General guidance
 * Have at least a goal of 2 (lizardfs set goal -r 2 /lizardfs/directory) to ensure data resiliency
@@ -52,3 +54,4 @@ but simple Samba authentication is the same as any other file system.
 * The more disks the faster the file system. 
 * Minimum of 3 servers will ensure data resiliency with a goal of 2. One failure in a 3 server configuration 
 leaves enough systems to ensure the goal can be met.
+* Raspberry Pi is noticably slower than X86 systems.
