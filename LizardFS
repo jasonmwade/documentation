@@ -15,13 +15,28 @@ that can be run on a separate system. Master server also runs the web interface 
 all kinds of interesting data. 
 
 Home Layout
-Chunkserver #1 - Raspberry Pi 4 with 4GB of ram running Ubuntu 22.04 LTS. 3TB spinning drive connected 
-through a USB3 docking station mounted to /mnt/data. 
-Since Ubuntu does not have LizardFS in the repos for ARM64, a custom docker container is created using 
+Chunkserver #1 - Raspberry Pi 4 with 4GB of ram running Ubuntu 22.04 LTS. 
+Since Ubuntu 22.04 does not have LizardFS in the repos for ARM64, a custom docker container is created using 
 ubuntu:20.04 and the configurations are added to this container. docker-compose is used to spin up the
 container and manage the process. 
 The volumes are as follows:
-/mnt/data/lfs:/data   # 3TB volume
-/mnt/mfs-data:/mnt/mfs-data  # 512GB boot volume where the rest of the data will be used for LizardFS
+/mnt/data/lfs:/data   # 3TB volume connected to a USB3 docking station
+/mnt/mfs-data:/mnt/mfs-data  # 512GB boot volume connected to a USB3 docking station
 
-Chunkserver #2 - 
+Chunkserver #2 - HP ProDesk 600 G1 SFF with 8GB of ram. 
+The volumes are as follows:
+/mnt/2/mfs03 # 8TB spinning disk
+/mnt/data01/lfs # 3TB spinning disk
+/mnt/data02/lfs # 1TB spinning disk
+
+Chunkserver #3 - ASRock DeskMini 110M with 16GB of ram.
+This host is also running Proxmox and contains a VM running the master server including the web interface. 
+The volumes are as follows: 
+/bigdata/mfs # 8TB spinning disk
+
+
+General guidance
+* Have at least a goal of 2 (lizardfs set goal -r 2 /directory) to ensure data resiliency
+* Reads and writes are notably slower than you would expect. The max throughput with a goal of 2 (2 copies of 
+each chunk) with the above setup is around 30MB/sec.
+* Use at least 1Gb networking on all interfaces and between switches.
