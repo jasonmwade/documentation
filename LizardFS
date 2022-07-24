@@ -1,0 +1,27 @@
+LizardFS provides an open-source way to join multiple random disks into one logical, global, distributed 
+storage volume. The volume support data chunking and replication settings that are dynamically set while 
+running.
+
+Chunkserver is the name of the instance that holds an actual disk. The chunkserver can be a VM, physical 
+system, and ARM or X86. The disk configuration is set by a simple config file on each chunkserver pointing 
+to an existing mounted file system. The file system can be any standard Linux-supported low-level file 
+system such as XFS or BTRFS. The mount points are simply mounted to the host and the configuration file 
+pointed to the location to store the chunk data. Since this file system replicates data from other systems,
+the disk input/output should be maximized where possible by using SSD or NVME. Spinning hard disks will 
+work also, but the overall larger volume will be much slower.
+
+Master server is the central metadata location. This can be replicated with a metadatalogger service 
+that can be run on a separate system. Master server also runs the web interface for LizardFS that shows
+all kinds of interesting data. 
+
+Home Layout
+Chunkserver #1 - Raspberry Pi 4 with 4GB of ram running Ubuntu 22.04 LTS. 3TB spinning drive connected 
+through a USB3 docking station mounted to /mnt/data. 
+Since Ubuntu does not have LizardFS in the repos for ARM64, a custom docker container is created using 
+ubuntu:20.04 and the configurations are added to this container. docker-compose is used to spin up the
+container and manage the process. 
+The volumes are as follows:
+/mnt/data/lfs:/data   # 3TB volume
+/mnt/mfs-data:/mnt/mfs-data  # 512GB boot volume where the rest of the data will be used for LizardFS
+
+Chunkserver #2 - 
